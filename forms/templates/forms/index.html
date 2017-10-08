@@ -1,10 +1,50 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <!-- <li><a href="/forms/{{ question.id }}/">{{ question.question_text }}</a></li> -->
-        <li><a href="{% url 'forms:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No forms are available.</p>
-{% endif %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'forms:comp'%}" method="post">
+{% csrf_token %}
+    <p>
+        <h3>ドリル選択</h3>
+        <input type="radio" name="drilling" id="drilling" value="ロングドリル" />
+        <label for="drilling">ロングドリル</label><br />
+        <input type="radio" name="drilling" id="drilling" value="ガイドドリル" />
+        <label for="drilling">ガイドドリル</label><br />
+    </p>
+    <p>
+        <h3>シャンク部刻印No.</h3>
+        <input name="drilling_no" type="text">
+    </p>
+    <p>
+        <h3>新品 or 再研磨</h3>
+        <input type="radio" name="exchange" id="exchange" value="新品" />
+        <label for="exchange">新品</label><br />
+        <input type="radio" name="exchange" id="exchange" value="再研磨" />
+        <label for="exchange">再研磨</label><br />
+    </p>
+    <p>
+        <h3>開始 or 終了</h3>
+        <input type="radio" name="StartEnd" id="StartEnd" value="開始" />
+        <label for="StartEnd">開始</label><br />
+        <input type="radio" name="StartEnd" id="StartEnd" value="終了" />
+        <label for="StartEnd">終了</label><br />
+    </p>
+    <p>
+        <h3>日時</h3>
+        <label for="Date">日付</label>
+        <input name="Date" type="text">
+        <br />
+        <label for="Time">時間</label>
+        <input name="Time" type="text">
+        <br />
+    </p>
+    <p>
+        <h3>刃先径</h3>
+        Φ<input name="first_diameter" type="text" >mm
+    </p>
+    <p>
+        <h3>使用数</h3>
+        <input name="used_count" type="text" >本
+    </p>
+    
+<input type="submit" value="送信" />
+</form>
