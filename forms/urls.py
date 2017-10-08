@@ -3,6 +3,7 @@
 from django.conf.urls import url
 from . import views
 
+app_name = 'forms'
 urlpatterns = [
     # ex: /froms/ name="function name of views"
     url(r'^$', views.index, name='index'),
