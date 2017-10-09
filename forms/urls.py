@@ -7,6 +7,7 @@ app_name = 'forms'
 urlpatterns = [
     # ex: /froms/ name="function name of views"
     url(r'^$', views.index, name='index'),
+    url(r'^comp/$', views.index, name='comp'),
     # ex: /forms/5/ question_id = 引数 of views
     url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /forms/5/results/

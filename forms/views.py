@@ -1,15 +1,17 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http import Http404
 from django.urls import reverse
+from .forms import DrillModelForm
 
 # from django.template import loader
-from .models import Choice, Question
+from .models import Choice, Question, Drilling
 # Create your views here.
 
-def index(request):
+# def index(request):
     # return HttpResponse("Hello, world. You're at the forms index.")
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
     # return HttpResponse(output)
     # template = loader.get_template('polls/index.html')
@@ -17,8 +19,43 @@ def index(request):
     #     'latest_question_list': latest_question_list,
     # }
     # return HttpResponse(template.render(context, request))
-    context = {'latest_question_list': latest_question_list}
+    # context = {'latest_question_list': latest_question_list}
+    # return render(request, 'forms/index.html')
+
+def index(request):
+    context = {
+        'form': DrillModelForm(),
+        'radio_form': ['drilling', 'drilling_exchange', 'StartEnd']
+    }
+    # debug
+    print(context['form'].fields)
     return render(request, 'forms/index.html', context)
+
+@require_POST
+def save(request):
+    form = MemberModelForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('forms:index')
+ 
+    context = {
+        'form': form,
+    }
+    return render(request, 'forms/index.html', context)
+
+def comp(request):
+
+    try:
+        form_data = request.POST
+    except (KeyError, form_data.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'forms/index.html', {
+            'error_message': "もう一度入力してください。",
+        })
+        # raise Http404("Form does not exist")
+    print(form_data)
+
+    # return HttpResponse("Hello, world. You're at the forms index.")
 
 def detail(request, question_id):
     # return HttpResponse("You're looking at question %s." % question_id)

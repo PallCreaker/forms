@@ -1,50 +1,39 @@
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'forms:comp'%}" method="post">
-{% csrf_token %}
-    <p>
-        <h3>ドリル選択</h3>
-        <input type="radio" name="drilling" id="drilling" value="ロングドリル" />
-        <label for="drilling">ロングドリル</label><br />
-        <input type="radio" name="drilling" id="drilling" value="ガイドドリル" />
-        <label for="drilling">ガイドドリル</label><br />
-    </p>
-    <p>
-        <h3>シャンク部刻印No.</h3>
-        <input name="drilling_no" type="text">
-    </p>
-    <p>
-        <h3>新品 or 再研磨</h3>
-        <input type="radio" name="exchange" id="exchange" value="新品" />
-        <label for="exchange">新品</label><br />
-        <input type="radio" name="exchange" id="exchange" value="再研磨" />
-        <label for="exchange">再研磨</label><br />
-    </p>
-    <p>
-        <h3>開始 or 終了</h3>
-        <input type="radio" name="StartEnd" id="StartEnd" value="開始" />
-        <label for="StartEnd">開始</label><br />
-        <input type="radio" name="StartEnd" id="StartEnd" value="終了" />
-        <label for="StartEnd">終了</label><br />
-    </p>
-    <p>
-        <h3>日時</h3>
-        <label for="Date">日付</label>
-        <input name="Date" type="text">
-        <br />
-        <label for="Time">時間</label>
-        <input name="Time" type="text">
-        <br />
-    </p>
-    <p>
-        <h3>刃先径</h3>
-        Φ<input name="first_diameter" type="text" >mm
-    </p>
-    <p>
-        <h3>使用数</h3>
-        <input name="used_count" type="text" >本
-    </p>
-    
-<input type="submit" value="送信" />
-</form>
+{% extends "forms/base.html" %}
+ 
+{% block content %}
+<div class="container">
+    <h2>Form</h2>
+    <form action="{% url 'forms:comp' %}" method="POST">
+        <table class="table table-bordered">
+            {% for field in form %}
+                {% if errors in field%}
+                    <div id="error">
+                         {{ field.errors }}
+                    </div>
+                {% endif%}
+                
+                {% if field.name in radio_form %}
+                    <tr class="warning">
+                        <td>{{ field.label }}</td>
+                        <td>
+                            {% for radio in field %}
+                                <div class="radio">
+                                    {{ radio.tag }}
+                                    <label>{{ radio.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="warning">
+                        <td>{{ field.label_tag }}</td>
+                        <td>{{ field }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    {% csrf_token %}
+    <input class="btn btn-success btn-block btn-lg" type="submit" value="送信">
+    </form>
+</div>
+{% endblock %}
