@@ -1,6 +1,22 @@
 {% extends "forms/base.html" %}
  
 {% block content %}
+<script>
+    $(function() {
+        $('tr.first_diameter').css('display', 'none');
+        $('tr.used_count').css('display', 'none');
+        $('tr.StartEnd input[type="radio"]').change(function() {
+            var num = $("[name='StartEnd']").index(this);
+            if(num == 1){
+                    $('tr.used_count').hide();
+                    $('tr.first_diameter').show();
+                } else {
+                    $('tr.first_diameter').hide();
+                    $('tr.used_count').show();
+            }
+        });
+    });
+</script>
 <div class="container">
     <h2>Form</h2>
     <form action="{% url 'forms:comp' %}" method="POST">
@@ -12,24 +28,24 @@
                     </div>
                 {% endif%}
                 
-                {% if field.name in radio_form %}
-                    <tr class="warning">
+                <tr class="warning {{ field.name }}">
+                    {% if field.name in radio_form %}
                         <td>{{ field.label }}</td>
                         <td>
                             {% for radio in field %}
                                 <div class="radio">
-                                    {{ radio.tag }}
-                                    <label>{{ radio.choice_label }}</label>
+                                    <label>
+                                        {{ radio.tag }}
+                                        {{ radio.choice_label }}
+                                    </label>
                                 </div>
                             {% endfor %}
                         </td>
-                    </tr>
-                {% else %}
-                    <tr class="warning">
+                    {% else %}
                         <td>{{ field.label_tag }}</td>
                         <td>{{ field }}</td>
-                    </tr>
-                {% endif %}
+                    {% endif %}
+                </tr>
             {% endfor %}
         </table>
     {% csrf_token %}

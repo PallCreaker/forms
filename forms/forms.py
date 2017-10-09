@@ -22,10 +22,12 @@ class DrillModelForm(forms.ModelForm):
     class Meta:
         model = Drilling
         fields = "__all__"
+        # fields = ['drilling_no', 'Date', 'Time', 'first_diameter', 'used_count']
+        # exclude = ['drilling']
  
-    # def __init__(self, *args, **kwargs):
-        # super().__init__(*args, **kwargs)
-        # for field in self.fields.values():
-            # print(field)
-            # if not field.name in ['drilling', 'drilling_exchange', 'StartEnd']:
-            # field.widget.attrs["class"] = "form-control"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            # TODO- fieldの名前で
+            if field.label in ['ｼｬﾝｸ部刻印No', '日付選択', '時間選択', '刃先径', '使用数']:
+                field.widget.attrs["class"] = "form-control"
