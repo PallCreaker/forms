@@ -50,14 +50,15 @@ def comp(request):
         print(form.errors)
         if form.is_valid(): # バリデーションを通った
             # sqllite に保存
-            # form.save()
-            drilling = form.cleaned_data['drilling']
-            drilling_no = form.cleaned_data['drilling_no']
-            drilling_exchange = form.cleaned_data['drilling_exchange']
-            StartEnd = form.cleaned_data['StartEnd']
-            Time = form.cleaned_data['Time']
-            first_diameter = form.cleaned_data['first_diameter']
-            used_count = form.cleaned_data['used_count']
+            form.save()
+            # drilling = form.cleaned_data['drilling']
+            # drilling_no = form.cleaned_data['drilling_no']
+            # drilling_exchange = form.cleaned_data['drilling_exchange']
+            # StartEnd = form.cleaned_data['StartEnd']
+            # Time = form.cleaned_data['Time']
+            # first_diameter = form.cleaned_data['first_diameter']
+            # used_count = form.cleaned_data['used_count']
+            # TODO CSV化
             return render(request, 'forms/comp.html')
         else:
             context = {
