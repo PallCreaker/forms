@@ -17,6 +17,11 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
 
 class Drilling(models.Model):
+
+    def __str__(self):
+        text = "ドリルNo." + str(self.drilling_no) + "_" + self.drilling_exchange
+        return text
+
     drilling = models.CharField('drilling:', max_length=200)
     drilling_no = models.IntegerField('ｼｬﾝｸ部刻印No' ,default=0)
     drilling_exchange = models.CharField('drilling_exchange:', max_length=200)
