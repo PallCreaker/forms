@@ -7,3 +7,65 @@ a:hover{
     color: white;
     text-decoration: none;
 }
+
+body{
+    width: 100%
+}
+
+#header{
+    /*width: 690px;*/
+    /*margin:0 auto;*/
+    /*background-color: #3c3c3c;*/
+    background-color: #f3f3f3;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    
+}
+#header .container{
+    padding-top: 10px;
+}
+#header .logo{
+    width: 200px;
+    padding: 5px;
+    position: relative;
+    /*background: white;*/
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;  
+    -moz-border-radius-topright: 10px;  
+}
+
+#header .logo svg{
+/*    top:5px;
+    position: absolute;*/
+}
+
+#footer{
+    background-color: gray;
+    width: 100%;
+    height: 50px;
+    margin-top:30px;
+}
+
+#footer .footer-copyright {
+    float: left;
+    width: 500px;
+    font-size: 13px;
+}
+#footer .footer-copyright p{
+    margin:0;
+    padding: 0;
+    color: white;
+    margin-top: 30px;
+}
+
+
+.cf:before,
+.cf:after {
+  content: ".";    
+  display: block;    
+  height: 0;    
+  overflow: hidden; 
+}
+.cf:after {clear: both;}
+.cf {zoom: 1;} /* IE < 8 */
