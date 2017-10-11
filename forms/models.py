@@ -17,13 +17,13 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
 
 class Drilling(models.Model):
-    drilling = models.BooleanField('drilling:')
+    drilling = models.CharField('drilling:', max_length=200)
     drilling_no = models.IntegerField('ｼｬﾝｸ部刻印No' ,default=0)
-    drilling_exchange = models.BooleanField('drilling_exchange:')
-    StartEnd = models.BooleanField('StartEnd:')
-    Date = models.DateTimeField('日付選択',default= datetime.today())
-    Time = models.DateTimeField('時間選択', default=datetime.now)
-    first_diameter = models.IntegerField('刃先径', default=0)
+    drilling_exchange = models.CharField('drilling_exchange:', max_length=200)
+    StartEnd = models.CharField('StartEnd:', max_length=200)
+    Date = models.DateField('日付選択',default= datetime.today())
+    Time = models.TimeField('時間選択', default=datetime.now)
+    first_diameter = models.FloatField('刃先径', default=0)
     used_count = models.IntegerField('使用数', default=0)
 
 

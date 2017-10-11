@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, render_to_response
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http import Http404
@@ -28,32 +28,64 @@ def index(request):
         'radio_form': ['drilling', 'drilling_exchange', 'StartEnd']
     }
     # debug
-    print(context['form'].fields)
+    # print(context['form'].fields)
     return render(request, 'forms/index.html', context)
 
-@require_POST
-def save(request):
-    form = MemberModelForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('forms:index')
+# @require_POST
+# def save(request):
+#     form = MemberModelForm(request.POST)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('forms:index')
  
-    context = {
-        'form': form,
-    }
-    return render(request, 'forms/index.html', context)
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'forms/index.html', context)
 
 def comp(request):
+    if request.method == 'POST':
+        form = DrillModelForm(request.POST)
+        print(form.is_valid())
+        print(form.errors)
+        if form.is_valid(): # バリデーションを通った
+            # sqllite に保存
+            # form.save()
+            drilling = form.cleaned_data['drilling']
+            drilling_no = form.cleaned_data['drilling_no']
+            drilling_exchange = form.cleaned_data['drilling_exchange']
+            StartEnd = form.cleaned_data['StartEnd']
+            Time = form.cleaned_data['Time']
+            first_diameter = form.cleaned_data['first_diameter']
+            used_count = form.cleaned_data['used_count']
+            return render(request, 'forms/comp.html')
+        else:
+            context = {
+                'form': DrillModelForm(),
+                'radio_form': ['drilling', 'drilling_exchange', 'StartEnd'],
+                'error_message': form.errors
+            }
+            return render(request, 'forms/index.html', context)
+    else:
+        # form = ContactForm() # 非束縛フォーム
+        # context = {
+        #     'form': DrillModelForm(),
+        #     'radio_form': ['drilling', 'drilling_exchange', 'StartEnd']
+        # }
+        # return render_to_response('forms/index.html', context)
+        # return render_to_response('forms/index.html')
+        return redirect('forms:index')
 
-    try:
-        form_data = request.POST
-    except (KeyError, form_data.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'forms/index.html', {
-            'error_message': "もう一度入力してください。",
-        })
-        # raise Http404("Form does not exist")
-    print(form_data)
+
+    # try:
+    #     form_data = request.POST
+    # except (KeyError, form_data.DoesNotExist):
+    #     # Redisplay the question voting form.
+    #     return render(request, 'forms/index.html', {
+    #         'error_message': "もう一度入力してください。",
+    #     })
+    #     # raise Http404("Form does not exist")
+    # print(form_data)
 
     # return HttpResponse("Hello, world. You're at the forms index.")
 

@@ -31,3 +31,7 @@ class DrillModelForm(forms.ModelForm):
             # TODO- fieldの名前で
             if field.label in ['ｼｬﾝｸ部刻印No', '日付選択', '時間選択', '刃先径', '使用数']:
                 field.widget.attrs["class"] = "form-control"
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data

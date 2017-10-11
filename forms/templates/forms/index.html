@@ -7,7 +7,7 @@
         $('tr.used_count').css('display', 'none');
         $('tr.StartEnd input[type="radio"]').change(function() {
             var num = $("[name='StartEnd']").index(this);
-            if(num == 1){
+            if(num == 0){
                     $('tr.used_count').hide();
                     $('tr.first_diameter').show();
                 } else {
@@ -19,6 +19,7 @@
 </script>
 <div class="container">
     <h2>Form</h2>
+    {{ error_message }}
     <form action="{% url 'forms:comp' %}" method="POST">
         <table class="table table-bordered">
             {% for field in form %}
@@ -41,6 +42,12 @@
                                 </div>
                             {% endfor %}
                         </td>
+                    {% elif field.name == 'first_diameter' %}
+                        <td>{{ field.label_tag }}</td>
+                        <td>Φ{{ field }}mm</td>
+                    {% elif field.name == 'used_count' %}
+                        <td>{{ field.label_tag }}</td>
+                        <td>{{ field }}本</td>
                     {% else %}
                         <td>{{ field.label_tag }}</td>
                         <td>{{ field }}</td>
